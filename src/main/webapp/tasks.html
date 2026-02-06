@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Checkmate - Tasks</title>
-    </head>
-    <body>
-        <h1>My Daily Tasks</h1>
-        <ul>
-            <li>✅ Wake up early</li>
-            <li>✅ Morning workout</li>
-            <li>☐ Complete coding assignment</li>
-            <li>☐ Review fire safety checklist</li>
-        </ul>
-        <p><a href="index.html">Back to Home</a></p>
-    </body>
+<head>
+    <title>Checkmate - Tasks</title>
+    <script>
+        // Simple script to strike through completed tasks
+        function toggleTask(checkbox) {
+            const task = checkbox.nextElementSibling;
+            if (checkbox.checked) {
+                task.style.textDecoration = "line-through";
+            } else {
+                task.style.textDecoration = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>My Daily Tasks Tracker</h1>
+    <ul>
+        <li>
+            <input type="checkbox" onclick="toggleTask(this)">
+            <span>Wake up early</span>
+        </li>
+        <li>
+            <input type="checkbox" onclick="toggleTask(this)">
+            <span>Morning workout</span>
+        </li>
+        <li>
+            <input type="checkbox" onclick="toggleTask(this)">
+            <span>Complete coding assignment</span>
+        </li>
+        <li>
+            <input type="checkbox" onclick="toggleTask(this)">
+            <span>Review fire safety checklist</span>
+        </li>
+    </ul>
+    <p><a href="index.html">Back to Home</a></p>
+</body>
 </html>
