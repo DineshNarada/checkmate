@@ -3,7 +3,52 @@
 <head>
     <title>Checkmate - Tasks</title>
     <script>
-        // Simple script to strike through completed tasks
+        
+        //Create new tasks
+        function addTask() {
+            const input = document.getElementById("newTask");
+            const taskText = input.value.trim();
+            if (taskText === "") return; // ignore empty input
+            
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <input type="checkbox" onclick="toggleTask(this)">
+                <span>${taskText}</span>
+            `;
+            document.getElementById("taskList").appendChild(li);
+
+            input.value = ""; // clear input
+            saveTasks(); // update localStorage
+        }
+
+        // Save checkbox states in localStorage
+        function saveTasks() {
+            const tasks = [];
+            document.querySelectorAll("#taskList li").forEach(li => {
+                const checkbox = li.querySelector("input[type=checkbox]");
+                const text = li.querySelector("span").textContent;
+                tasks.push({ text, checked: checkbox.checked });
+            });
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+
+        // Load checkbox states from localStorage
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = "";
+            tasks.forEach(task => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <input type="checkbox" ${task.checked ? "checked" : ""} onclick="toggleTask(this)">
+                    <span>${task.text}</span>
+                `;
+                taskList.appendChild(li);
+                if (task.checked) toggleTask(li.querySelector("input")); // apply strike-through if checked
+            });
+        }
+
+        // Strike-through completed tasks
         function toggleTask(checkbox) {
             const task = checkbox.nextElementSibling;
             if (checkbox.checked) {
@@ -11,28 +56,20 @@
             } else {
                 task.style.textDecoration = "none";
             }
+            saveTasks(); // save whenever user clicks
         }
+
+        window.onload = loadTasks;
     </script>
 </head>
 <body>
-    <h1>My Daily Tasks Tracker</h1>
-    <ul>
-        <li>
-            <input type="checkbox" onclick="toggleTask(this)">
-            <span>Wake up early</span>
-        </li>
-        <li>
-            <input type="checkbox" onclick="toggleTask(this)">
-            <span>Morning workout</span>
-        </li>
-        <li>
-            <input type="checkbox" onclick="toggleTask(this)">
-            <span>Complete coding assignment</span>
-        </li>
-        <li>
-            <input type="checkbox" onclick="toggleTask(this)">
-            <span>Review fire safety checklist</span>
-        </li>
+    <h1>My Daily Tasks</h1>
+    
+    <input type="text" id="newTask" placeholder="Enter a new task">
+    <button onclick="addTask()">Add Task</button>
+    
+    <ul id="taskList">
+        <!--Dynamic Task List-->
     </ul>
     <p><a href="index.html">Back to Home</a></p>
 </body>
