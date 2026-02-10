@@ -1,4 +1,4 @@
-package com.checkmate.checkmate.resources;
+package com.checkmate.resources;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
