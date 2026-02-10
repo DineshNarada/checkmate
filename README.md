@@ -19,10 +19,13 @@ Checkmate is your partner in helping you stay well-organized. This application p
 src/
 ├── main/
 │   ├── java/
-│   │   └── com/checkmate/checkmate/
+│   │   └── com/checkmate/
 │   │       ├── JakartaRestConfiguration.java
+│   │       ├── Habit.java
+│   │       ├── HabitLog.java
 │   │       └── resources/
-│   │           └── JakartaEE10Resource.java
+│   │           ├── JakartaEE10Resource.java
+│   │           └── HabitsResource.java
 │   ├── resources/
 │   │   └── META-INF/
 │   │       └── persistence.xml
@@ -30,11 +33,12 @@ src/
 │       ├── index.html
 │       ├── style.css
 │       ├── tasks.html
+│       ├── habits.html
 │       └── WEB-INF/
 │           ├── beans.xml
 │           ├── glassfish-web.xml
 │           └── web.xml
-```
+``` 
 
 ## Technology Stack
 
@@ -122,9 +126,19 @@ Packaging: WAR (Web Application Archive)
 
 ## REST API Endpoints
 
-The application provides REST API endpoints under the `/resources` path. Base URL: `http://localhost:8080/checkmate/resources/`
+The application exposes REST APIs under the `/api` path. Base URL: `http://localhost:8080/checkmate/api/`
 
-Refer to `JakartaEE10Resource.java` for available endpoints.
+Implemented endpoints include (see `src/main/java/com/checkmate/resources`):
+
+- `JakartaEE10Resource.java` — example Jakarta EE resource (kept for demo/ping)
+- `HabitsResource.java` — Habits Tracker API used by `habits.html`
+
+Key Habits endpoints:
+
+- `GET /api/habits` — list all habits
+- `POST /api/habits` — create a new habit (JSON body: `{ "name": "..." }`)
+- `GET /api/habits/{id}/logs?month=YYYY-MM` — get logs for a habit for a month
+- `POST /api/habits/{id}/logs` — create/update a daily log (JSON body: `{ "date": "YYYY-MM-DD", "status": 0|1 }`)
 
 ## Contributing
 
